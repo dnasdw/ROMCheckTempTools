@@ -830,7 +830,7 @@ int CSwitchGames::checkResult()
 			vector<string> v7zl = SplitOf(s7zl, "\r\n");
 			for (vector<string>::iterator itList = v7zl.begin(); itList != v7zl.end(); ++itList)
 			{
-				*itList = trim(*itList);
+				*itList = trim(AToU8(*itList));
 			}
 			vector<string>::const_iterator itList = remove_if(v7zl.begin(), v7zl.end(), empty);
 			v7zl.erase(itList, v7zl.end());
