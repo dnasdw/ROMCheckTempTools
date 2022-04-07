@@ -57,7 +57,14 @@ int CSwitchGames::Check()
 
 string CSwitchGames::trim(const string& a_sLine)
 {
-	return WToU8(trim(U8ToW(a_sLine)));
+	try
+	{
+		return WToU8(trim(U8ToW(a_sLine)));
+	}
+	catch (...)
+	{
+		return WToA(trim(AToW(a_sLine)));
+	}
 }
 
 wstring CSwitchGames::trim(const wstring& a_sLine)
