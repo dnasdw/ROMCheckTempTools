@@ -84,7 +84,7 @@ private:
 	static wstring trim(const wstring& a_sLine);
 	static bool empty(const string& a_sLine);
 	static bool pathCompare(const UString& lhs, const UString& rhs);
-	static int readTextFile(const UString& a_sFilePath, STextFileContent& a_TextFileContent);
+	static int readTextFile(const UString& a_sFilePath, STextFileContent& a_TextFileContent, bool a_bAllowEmpty);
 	static bool makeDir(const UString& a_sDirPath);
 	static int writeFileString(const UString& a_sFilePath, const string& a_sStringContent);
 	int readConfig();

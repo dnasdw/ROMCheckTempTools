@@ -98,7 +98,7 @@ bool CSwitchGames::pathCompare(const UString& lhs, const UString& rhs)
 	return sLhs < sRhs;
 }
 
-int CSwitchGames::readTextFile(const UString& a_sFilePath, STextFileContent& a_TextFileContent)
+int CSwitchGames::readTextFile(const UString& a_sFilePath, STextFileContent& a_TextFileContent, bool a_bAllowEmpty)
 {
 	FILE* fp = UFopen(a_sFilePath.c_str(), USTR("rb"), true);
 	if (fp == nullptr)
@@ -107,7 +107,7 @@ int CSwitchGames::readTextFile(const UString& a_sFilePath, STextFileContent& a_T
 	}
 	fseek(fp, 0, SEEK_END);
 	u32 uFileSize = ftell(fp);
-	if (uFileSize == 0)
+	if (uFileSize == 0 && !a_bAllowEmpty)
 	{
 		fclose(fp);
 		UPrintf(USTR("file size == 0: %") PRIUS USTR("\n"), a_sFilePath.c_str());
@@ -281,6 +281,10 @@ int CSwitchGames::readTextFile(const UString& a_sFilePath, STextFileContent& a_T
 		{
 			a_TextFileContent.LineTypeOld = kLineTypeLFMix;
 		}
+	}
+	else if (EndWith(a_sFilePath, USTR(".nfo")) && uFileSize == 0 && a_bAllowEmpty)
+	{
+		a_TextFileContent.LineTypeOld = kLineTypeLF;
 	}
 	if (EndWith(a_sFilePath, USTR(".nfo")) && a_TextFileContent.LineTypeOld != kLineTypeUnknown && nCROnlyCount == 0)
 	{
@@ -891,7 +895,7 @@ int CSwitchGames::checkResult()
 		{
 			UString sFilePath = sDirPath + USTR("/") + result.NfoFile[0];
 			STextFileContent textFileContent;
-			if (readTextFile(sFilePath, textFileContent) != 0)
+			if (readTextFile(sFilePath, textFileContent, true) != 0)
 			{
 				UPrintf(USTR("read text file error: %") PRIUS USTR("\n"), sFilePath.c_str());
 				nRowStyle = kStyleIdRed;
@@ -940,7 +944,7 @@ int CSwitchGames::checkResult()
 		{
 			UString sFilePath = sDirPath + USTR("/") + result.SfvFile[0];
 			STextFileContent textFileContent;
-			if (readTextFile(sFilePath, textFileContent) != 0)
+			if (readTextFile(sFilePath, textFileContent, false) != 0)
 			{
 				UPrintf(USTR("read text file error: %") PRIUS USTR("\n"), sFilePath.c_str());
 				nRowStyle = kStyleIdRed;
