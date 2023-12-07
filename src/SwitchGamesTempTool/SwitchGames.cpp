@@ -1032,6 +1032,10 @@ int CSwitchGames::checkResult()
 			for (vector<string>::const_iterator it = vSfv.begin(); it != vSfv.end(); ++it)
 			{
 				const string& sLine = *it;
+				if (StartWith(sLine, ";"))
+				{
+					continue;
+				}
 				vector<string> vLine = Split(sLine, " ");
 				if (vLine.size() != 2)
 				{
