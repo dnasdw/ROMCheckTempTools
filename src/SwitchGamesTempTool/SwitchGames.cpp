@@ -100,7 +100,7 @@ bool CSwitchGames::pathCompare(const UString& lhs, const UString& rhs)
 
 int CSwitchGames::readTextFile(const UString& a_sFilePath, STextFileContent& a_TextFileContent, bool a_bAllowEmpty)
 {
-	FILE* fp = UFopen(a_sFilePath.c_str(), USTR("rb"), true);
+	FILE* fp = UFopen(a_sFilePath, USTR("rb"), true);
 	if (fp == nullptr)
 	{
 		return 1;
@@ -388,7 +388,7 @@ int CSwitchGames::writeFileString(const UString& a_sFilePath, const string& a_sS
 		sFilePath = USTR("\\\\?\\") + sFilePath;
 	}
 #endif
-	FILE* fp = UFopen(sFilePath.c_str(), USTR("wb"), false);
+	FILE* fp = UFopen(sFilePath, USTR("wb"), false);
 	if (fp == nullptr)
 	{
 		return 1;
@@ -401,7 +401,7 @@ int CSwitchGames::writeFileString(const UString& a_sFilePath, const string& a_sS
 int CSwitchGames::readConfig()
 {
 	UString sConfigXmlPath = m_sModuleDirName + USTR("/Switch Games.xml");
-	FILE* fp = UFopen(sConfigXmlPath.c_str(), USTR("rb"), false);
+	FILE* fp = UFopen(sConfigXmlPath, USTR("rb"), false);
 	if (fp == nullptr)
 	{
 		return 1;
@@ -478,7 +478,7 @@ int CSwitchGames::readConfig()
 
 int CSwitchGames::readResult()
 {
-	FILE* fp = UFopen(m_sResultFileName.c_str(), USTR("rb"), false);
+	FILE* fp = UFopen(m_sResultFileName, USTR("rb"), false);
 	if (fp == nullptr)
 	{
 		return 1;
@@ -707,7 +707,7 @@ int CSwitchGames::checkResult()
 				else
 				{
 					UString sFilePath = sDirPath + USTR("/") + sFile;
-					FILE* fp = UFopen(sFilePath.c_str(), USTR("rb"), false);
+					FILE* fp = UFopen(sFilePath, USTR("rb"), false);
 					if (fp == nullptr)
 					{
 						return 1;
@@ -751,7 +751,7 @@ int CSwitchGames::checkResult()
 						else
 						{
 							UString sFilePath = sDirPath + USTR("/") + sFile;
-							FILE* fp = UFopen(sFilePath.c_str(), USTR("rb"), false);
+							FILE* fp = UFopen(sFilePath, USTR("rb"), false);
 							if (fp == nullptr)
 							{
 								return 1;
@@ -825,7 +825,7 @@ int CSwitchGames::checkResult()
 			fflush(stdout);
 			fclose(fp);
 			UFreopen(USTR("CON"), USTR("w"), stdout);
-			fp = UFopen(c_sTempFileName.c_str(), USTR("rb"), false);
+			fp = UFopen(c_sTempFileName, USTR("rb"), false);
 			if (fp == nullptr)
 			{
 				return 1;
@@ -1035,7 +1035,7 @@ int CSwitchGames::checkResult()
 		{
 			bool bCRC32Error = false;
 			UString sFilePath = sDirPath + USTR("/") + result.SfvFile[0];
-			FILE* fp = UFopen(sFilePath.c_str(), USTR("rb"), false);
+			FILE* fp = UFopen(sFilePath, USTR("rb"), false);
 			if (fp == nullptr)
 			{
 				bCRC32Error = true;
@@ -1103,7 +1103,7 @@ int CSwitchGames::checkResult()
 		UString sType = WToU(it->first);
 		const map<wstring, string>& mOutput = it->second;
 		UString sOutputFileName = m_sOutputDirName + USTR("/") + sType + USTR(".txt");
-		FILE* fp = UFopen(sOutputFileName.c_str(), USTR("wb"), false);
+		FILE* fp = UFopen(sOutputFileName, USTR("wb"), false);
 		if (fp == nullptr)
 		{
 			return 1;
