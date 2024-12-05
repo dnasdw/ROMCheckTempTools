@@ -1066,6 +1066,10 @@ int CSwitchGames::checkResult()
 			pTemp[uSfvFileSize] = 0;
 			string sSfv = pTemp;
 			delete[] pTemp;
+			if (StartWith(sSfv, "\xEF\xBB\xBF"))
+			{
+				sSfv.erase(0, 3);
+			}
 			vector<string> vSfv = SplitOf(sSfv, "\r\n");
 			for (vector<string>::iterator it = vSfv.begin(); it != vSfv.end(); ++it)
 			{
@@ -1087,6 +1091,10 @@ int CSwitchGames::checkResult()
 					break;
 				}
 				UString sFile = AToU(vLine[0]);
+				if (EndWith(sFile, USTR(".nfo")))
+				{
+					continue;
+				}
 				u32 uCRC32 = SToU32(vLine[1], 16);
 				map<UString, u32>::const_iterator itRar = result.RarFile.find(sFile);
 				if (itRar == result.RarFile.end())
